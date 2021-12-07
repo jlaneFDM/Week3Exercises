@@ -1,17 +1,12 @@
 package com.fdmgroup.streamsExercises;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
-import java.util.stream.Stream;
-
 import com.fdmgroup.lambdaexercises.BankAccount;
 
 public class Runner {
@@ -40,7 +35,8 @@ public class Runner {
 		accounts.add(t7);
 		accounts.add(t8);
 
-		long currentCheckingCount = accounts.stream().filter(acct -> acct.getAccountType() == "current/checking")
+		long currentCheckingCount = accounts.stream()
+				.filter(acct -> acct.getAccountType() == "current/checking")
 				.count();
 		
 		System.out.println("# of current/checking accts: " + currentCheckingCount); // outputs 3
@@ -95,23 +91,28 @@ public class Runner {
 		System.out.println(accounts.toString());
 		
 		//4
-		List<BankAccount> onlyBankCode987654 = accounts.stream().filter(a -> a.getBankCode() == 987654).collect(Collectors.toList());
+		List<BankAccount> onlyBankCode987654 = accounts.stream()
+				.filter(a -> a.getBankCode() == 987654)
+				.collect(Collectors.toList());
 		System.out.println( "Only bank code 987654 : " + onlyBankCode987654.toString());
 		
 		//5
-		List<BankAccount> onlyDr = accounts.stream().filter(a -> a.getAccountHolder().charAt(0) == 'D' && a.getAccountHolder().charAt(1) == 'r')
+		List<BankAccount> onlyDr = accounts.stream()
+				.filter(a -> a.getAccountHolder()
+				.charAt(0) == 'D' && a.getAccountHolder().charAt(1) == 'r')
 				.collect(Collectors.toList());
 			System.out.println("Only title Dr: " + onlyDr.toString());
+			
+		//1.4
+		//1
+		Optional<BankAccount> richestPerson =  accounts.stream().reduce((a1, a2) -> a1.getBalance() > a2.getBalance()? a1: a2);
+			System.out.println("Richest person: " + richestPerson);
 		
-		
-		
-		
-		
-		
-		
-		 
-		
-		
+		//2
+		Optional<BankAccount> lowestBalance = accounts.stream().filter(a -> a.getBankCode() == 987654)
+				.reduce((a1, a2) -> a1.getBalance() < a2.getBalance()? a1:a2);
+			System.out.println("Lowest balance for sort code 987654: " + lowestBalance);
+				
 	}
 
 }
