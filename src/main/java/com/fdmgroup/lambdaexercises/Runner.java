@@ -90,18 +90,21 @@ public class Runner {
 		
 		//1.4
 		//1
-		Comparator<BankAccount> getBiggerBalance = (a1, a2) -> a1.getBalance() > a2.getBalance()? 1:0;
+		Comparator<BankAccount> getBiggerBalance = 
+				(a1, a2) -> a1.getBalance() > a2.getBalance()? 1: 0;
 		Collections.sort(accounts, getBiggerBalance);
 		//2
 		Comparator<BankAccount> sortByAcctType = (b1, b2) -> b1.getAccountType().compareTo(b2.getAccountType());
 			Collections.sort(accounts, sortByAcctType);
 		//3
-		Comparator<BankAccount> sortByAcctNum = (c1, c2) -> c1.getAccountNumber() > c2.getAccountNumber()? 1:0;
+		Comparator<BankAccount> sortByAcctNum = 
+				(c1, c2) -> c1.getAccountNumber() > c2.getAccountNumber()? c1.getAccountNumber():c2.getAccountNumber();
 			Collections.sort(accounts,sortByAcctNum);
+		//4
+		Comparator<BankAccount>  sortByAcctTypeThenAcctBalance = sortByAcctType.thenComparing(getBiggerBalance);
+			Collections.sort(accounts, sortByAcctTypeThenAcctBalance);
 		
-		
-		
-				
+			
 	}
 
 }
